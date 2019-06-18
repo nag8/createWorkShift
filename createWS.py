@@ -1,16 +1,17 @@
 # coding: UTF-8
 
-from dateutil.relativedelta import relativedelta
 import openpyxl
 from openpyxl.styles import Font, colors, PatternFill
 from openpyxl.utils import get_column_letter, column_index_from_string
 from openpyxl.cell.cell import MergedCell
+from openpyxl.comments import Comment
 import configparser
+import jpholiday
 from datetime import datetime, date, timedelta
+from dateutil.relativedelta import relativedelta
 import calendar
 import copy
-from openpyxl.comments import Comment
-import jpholiday
+from emoji import emojize
 
 
 # 使わせてもらったコード
@@ -20,6 +21,10 @@ import jpholiday
 
 # メイン処理
 def main():
+
+    # 開始ログお茶目ver
+    print('月次処理を開始するよ！' + emojize(":thumbs_up:"))
+
 
     # 設定ファイル取得
     iniFile = getIniFile()
@@ -51,10 +56,13 @@ def main():
     # changeColor(sheet)
 
     # テンプレ部分を非表示にする
-    sheet.row_dimensions.group(102,　119, hidden=True)
+    sheet.row_dimensions.group(102, 119, hidden=True)
 
     # 保存
     wb.save(iniFile.get('settings', 'OUT') + createTitle() + '.xlsx')
+
+    # 終了ログお茶目ver
+    print('終了したよ！ファイルを見てみよう！' + emojize(":sparkling_heart:"))
 
 
 # 設定ファイル取得
@@ -73,7 +81,7 @@ def createTitle():
 def nextMonth():
 
     # とりあえず翌月固定
-    monthNum = 2
+    monthNum = 1
 
     # 来月の1日を取得
     return datetime.today().replace(day = 1) + relativedelta(months = monthNum)
